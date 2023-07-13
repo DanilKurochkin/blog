@@ -1,0 +1,9 @@
+<h1>Its works</h1>
+
+{% for post in posts %}
+    <div>
+        <h2>{{ post.title }}</h2>
+        <p>{{ post.date }}</p>
+        <p>{{ post.description }}</p>
+    </div>
+{% endfor %}
