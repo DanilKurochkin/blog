@@ -1,9 +1,33 @@
 <h1>Its works</h1>
 
-{% for post in posts %}
+<h2>Written post{{ count | pluralize }}: {{ count }}</h2>
+
+{% for post in page_obj %}
     <div>
-        <h2>{{ post.title }}</h2>
-        <p>{{ post.date }}</p>
-        <p>{{ post.description }}</p>
+        <a href="{% url 'blog:detail' post.id %}"><h2>{{ post.title }}</h2></a>
+        <p>{{ post.date |date:'d M Y' }}</p>
+        <p>{{ post.description|safe|truncatechars:100 }}</p>
     </div>
 {% endfor %}
+
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            {% if page_obj.previous_page_number != 1 %}
+                <a href="?page=1">first</a>
+            {% endif %}
+            <a href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a>
+        {% endif %}
+
+        <span class="current">
+            {{ page_obj.number }}
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a>
+            {% if page_obj.next_page_number != page_obj.paginator.num_pages %}
+                <a href="?page={{ page_obj.paginator.num_pages }}">last</a>
+            {% endif %}
+        {% endif %}
+    </span>
+</div>
