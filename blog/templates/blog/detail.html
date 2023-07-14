@@ -1,5 +1,18 @@
-<h1>{{ post.title }}</h1>
+{% extends 'portfolio/base.html' %}
 
-<h2>{{ post.date|date:'d M Y' }}</h2>
+{% block content %}
 
-{{ post.description|safe }}
+<style>
+    .text-padding {
+     padding: 50px; /* Поля вокруг текста */
+     white-space: normal;
+    }
+</style>
+
+<h1 class="text-center mt-5" id="blogdetailtitle">{{ post.title }}</h1>
+
+<h2 class="text-center text-muted mb-5">{{ post.date|date:'d M Y' }}</h2>
+
+<p class="text-padding"  padding: 10px 50px 30px 0;>{{ post.description }}</p>
+
+{% endblock %}

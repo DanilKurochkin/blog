@@ -7,7 +7,7 @@ from django.core.paginator import Paginator
 def main(request):
     posts = Post.objects.order_by('-date')
     count = posts.count()
-    paginated_posts = Paginator(posts, 1)
+    paginated_posts = Paginator(posts, 5)
     page_number = request.GET.get('page')
     page_obj = paginated_posts.get_page(page_number)
     

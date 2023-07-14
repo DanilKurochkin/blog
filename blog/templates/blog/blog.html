@@ -1,33 +1,41 @@
-<h1>Its works</h1>
+{% extends 'portfolio/base.html' %}
 
-<h2>Written post{{ count | pluralize }}: {{ count }}</h2>
+{% block content %}
+
+<h1 id="blogtitle" class="font-weight-bold text-center">Мои пуки</h1>
+
+<h3 class="text-center mb-5">Количество пуков в пустоту: {{ count }}</h3>
 
 {% for post in page_obj %}
-    <div>
-        <a href="{% url 'blog:detail' post.id %}"><h2>{{ post.title }}</h2></a>
-        <p>{{ post.date |date:'d M Y' }}</p>
-        <p>{{ post.description|safe|truncatechars:100 }}</p>
+<div class="row justify-content-center my-3">
+    <div class="col-md-10">
+        <a href="{% url 'blog:detail' post.id %}">
+            <h2>{{ post.title }}</h2>
+        </a>
+        <h5 class="text-muted">{{ post.date |date:'d M Y' }}</h5>
+        <h4>{{ post.description|safe|truncatechars:100 }}</h4>
     </div>
+</div>
 {% endfor %}
-
-<div class="pagination">
-    <span class="step-links">
+<div>
+    <nav aria-label="Paginatooor">
+        <ul class="pagination justify-content-center">
         {% if page_obj.has_previous %}
-            {% if page_obj.previous_page_number != 1 %}
-                <a href="?page=1">first</a>
-            {% endif %}
-            <a href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a>
+        {% if page_obj.previous_page_number != 1 %}
+            <li class="page-item"><a class="page-link" href="?page=1">1</a></li>
+        {% endif %}
+        <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a></li>
         {% endif %}
 
-        <span class="current">
-            {{ page_obj.number }}
-        </span>
+        <li class="page-item disabled"><a class="page-link" >{{ page_obj.number }}</a></li>
 
         {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a>
+        <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a></li>
             {% if page_obj.next_page_number != page_obj.paginator.num_pages %}
-                <a href="?page={{ page_obj.paginator.num_pages }}">last</a>
+                <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a></li>
             {% endif %}
         {% endif %}
-    </span>
+        </ul>
+    </nav>
 </div>
+{% endblock %}
